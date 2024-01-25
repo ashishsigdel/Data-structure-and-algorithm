@@ -50,6 +50,7 @@ class Queue {
       return x;
     } else if (rear == front) {
       x = arr[rear];
+      arr[rear] = 0;
       rear = -1;
       front = -1;
       return x;
@@ -74,6 +75,7 @@ class Queue {
     for (int i = 0; i < 5; i++) {
       cout << arr[i] << "  ";
     }
+    cout<<endl;
   }
 
 };
@@ -86,10 +88,7 @@ int main() {
     cout << "Select option to perform the operation" << endl;
     cout << "1. Enqueue()" << endl;
     cout << "2. Dequeue()" << endl;
-    cout << "3. isEmpty()" << endl;
-    cout << "4. isFull()" << endl;
-    cout << "5. Count()" << endl;
-    cout << "6. Display()" << endl;
+    cout << "3. Display()" << endl;
 
     cin >> option;
 
@@ -105,21 +104,6 @@ int main() {
       cout << "Dequeued Value : " << q1.dequeue() << endl;
       break;
     case 3:
-      if (q1.isEmpty())
-        cout << "Queue is Empty" << endl;
-      else
-        cout << "Queue is not Empty" << endl;
-      break;
-    case 4:
-      if (q1.isFull())
-        cout << "Queue is Full" << endl;
-      else
-        cout << "Queue is not Full" << endl;
-      break;
-    case 5:
-      cout << "Total values in Queue : " << q1.count() << endl;
-      break;
-    case 6:
       q1.display();
       break;
     default:
