@@ -1,67 +1,79 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
-struct Node {
+class Node {
+public:
     int data;
     Node* next;
+
+    Node(int value) {
+        data = value;
+        next = NULL;
+    }
+};
+
+class LinkedList {
+private:
+    Node* first;
+
+public:
+   LinkedList() {
+        first = NULL;
+    }
+
+    void addNode(int value) {
+        Node* newNode = new Node(value);
+
+        if (first == NULL) {
+            first = newNode;
+        } else {
+            Node* current = first;
+            while (current->next != NULL) {
+                current = current->next;
+            }
+            current->next = newNode;
+        }
+    }
+
+    void displayList() {
+        Node* current = first;
+        while (current != NULL) {
+            cout << current->data << " ";
+            current = current->next;
+        }
+        cout << endl;
+    }
 };
 
 int main() {
-    Node *Ptr, *CPT, *First, *Avail;
+    LinkedList myList;
 
-    // Assume Avail is a function that returns a new node
-    Avail = new Node;
-    
-    // Assume link is a function that returns the next available node
-    Avail->next = nullptr;
+    char choice = 'Y';
+    do {
+        int value;
+        Node* Ptr = new Node(0);
+        Node* CPT;
 
-    // Read data into the first node
-    cout << "Enter data for the first node: ";
-    cin >> Avail->data;
+        cout << "Enter data for the node: ";
+        cin >> value;
 
-    Ptr = Avail;
-    First = Ptr;
+        // Update the first pointer if it's the first node
+        if (Ptr->data == 0) {
+            Ptr->data = value;
+            myList.addNode(Ptr->data);
+        } else {
+            CPT = new Node(value); 
+            myList.addNode(CPT->data);
 
-    char CH = 'Y';
-
-    while (CH == 'Y' || CH == 'y') {
-        // Create a new node
-        CPT = new Node;
-        CPT->next = nullptr;
-
-        // Read data into the new node
-        cout << "Enter data for the next node: ";
-        cin >> CPT->data;
-
-        // Link the new node to the current node
-        Ptr->next = CPT;
-
-        // Move the pointer to the new node
-        Ptr = CPT;
-
-        // Ask user if they want to add more nodes
+            // Link the previous node to the new node
+            Ptr->next = CPT;
+            Ptr = CPT;
+        }
         cout << "Do you want to add more nodes? (Y/N): ";
-        cin >> CH;
-    }
+        cin >> choice;
 
-    // Set the last node's link to NULL
-    Ptr->next = nullptr;
+    } while (choice == 'Y' || choice == 'y');
 
-    // Display the linked list
-    Ptr = First;
-    cout << "Linked List: ";
-    while (Ptr != nullptr) {
-        cout << Ptr->data << " ";
-        Ptr = Ptr->next;
-    }
-
-    // Clean up memory by deleting the allocated nodes
-    Ptr = First;
-    while (Ptr != nullptr) {
-        CPT = Ptr;
-        Ptr = Ptr->next;
-        delete CPT;
-    }
-
+    myList.displayList(); 
     return 0;
 }
